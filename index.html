@@ -1,0 +1,48 @@
+<script>
+function computerPlay() {
+  var computerChoice = Math.floor((Math.random() } * 3) + 1);
+switch (computerChoice) {
+  case a:
+    return rock;
+    break;
+  case b:
+    return paper;
+    break;
+  case c:
+    return scissors;
+    break;
+  default: alert(Your choice is invalid!);
+    break;
+}
+
+let sign = prompt("Make your choice.");
+
+function roundMatch (playerSelection, computerSelection) {
+  if (playerSelection.toLowerCase() == 'rock' && computerSelection == 'paper') {
+    return ("Paper beats Rock! You lose!");
+  } else if (playerSelection.toLowerCase() == 'rock' && computerSelection == 'scissors') {
+    return ("Rock beats Scissors! You win!");
+  } else if (playerSelection.toLowerCase() == 'rock' && computerSelection == 'rock') {
+    return ("You both choose the same! Draw!");
+  } else if (playerSelection.toLowerCase() == 'paper' && computerSelection == 'rock') {
+    return ("Paper beats Rock! You win!");
+  } else if (playerSelection.toLowerCase() == 'paper' && computerSelection == 'scissors') {
+    return ("Scissors beat paper! You lose!");
+  } else if (playerSelection.toLowerCase() == 'paper' && computerSelection == 'paper') {
+    return ("You both choose the same! Draw!");
+  } else if (playerSelection.toLowerCase() == 'scissors' && computerSelection == 'rock') {
+    return ("Rock beats scissors! You lose!");
+  } else if (playerSelection.toLowerCase() == 'scissors' && computerSelection == 'paper') {
+    return ("Scissors beats paper! You win!");
+  } else if (playerSelection.toLowerCase() == 'scissors' && computerSelection == 'scissors') {
+    return ("You both chose the same! Draw!");
+  }
+  }
+}
+
+function game() {
+  
+}
+
+
+</script>
