@@ -1,62 +1,117 @@
-<script>
-var choices = ["rock", "paper", "scissors"];
-var playerScore = 0;
-var cpuScore = 0;
+<!DOCTYPE html>
+<html>
+  <body>
 
-function cpuPlay() {
-  let cpuChoice = Math.floor(Math.random() * 3);
-  return choices[cpuChoice];
-}
+    <div class="score-board">
+      <div id="player-label" class="player-badge">Human</div>
+      <div id="cpu-label" class="cpu-badge">CPU</div>
+      <span id="player-score">0</span>:<span id="cpu-score">0</span>
+    </div>
 
-function playerPlay() {
-  let playerChoice = prompt("Rock, paper, or scissors. The choice is yours!").toLowerCase();
-  if (choices.indexOf(playerChoice) > -1) {
-    return playerChoice;
-  } else {
-    console.log("You must choose between rock, paper, or scissors!");
-    playerPlay();
-  }
-}
+    <div class="result">
+      <p>Ready to fight?</p>
+    </div>
 
-function gameRound(playerSelection, cpuSelection) {
-  if (playerSelection === "rock" && cpuSelection === "paper") {
-    cpuScore += 1;
-    return "Paper beats rock! You lose!";
-  } else if (playerSelection === "rock" && cpuSelection === "scissors") {
-    playerScore += 1;
-    return "Rock beats scissors! You win!";
-  } else if (playerSelection === "paper" && cpuSelection === "rock") {
-    playerScore += 1;
-    return "Paper beats rock! You win!";
-  } else if (playerSelection === "paper" && cpuSelection === "scissors") {
-    cpuScore += 1;
-    return "Scissors beat paper! You lose!";
-  } else if (playerSelection === "scissors" && cpuSelection === "rock") {
-    cpuScore += 1;
-    return "Rock beats scissors! You lose!";
-  } else if (playerSelection === "scissors" && cpuSelection === "paper") {
-    playerScore += 1;
-    return "Scissors beat paper! You win!";
-  } else {
-    playerScore += 1;
-    cpuScore += 1;
-    return "You both chose the same! It's a tie!";
-  }
-}
+    <div class="choices">
+      <div class="choice" id="rock">
+        <button name="rock-button" id="rock-button">Rock</button>
+      </div>
+      <div class="choice" id="paper">
+        <button name="paper-button" id="paper-button">Paper</button>
+      </div>
+      <div class="choice" id="scissors">
+        <button name="scissors-button" id="scissors-button">Scissors</button>
+      </div>
+    </div>
 
-function game() {
-  for(let i = 0; i < 5; i++) {
-    console.log(gameRound(playerPlay(), cpuPlay()));
-  }
+    <script>
+    var playerScore = 0;
+    var cpuScore = 0;
+    const playerScore_span = document.getElementById("player-score");
+    const cpuScore_span = document.getElementById("cpu-score");
+    const scoreBoard_div = document.querySelector(".score-board");
+    const result_p = document.querySelector(".result > p");
+    const rock_div = document.getElementById("rock");
+    const paper_div = document.getElementById("paper");
+    const scissors_div = document.getElementById("scissors");
 
-  if(playerScore > cpuScore) {
-    alert("Congratulations, you won the game!");
-  } else if (cpuScore > playerScore) {
-    alert("Oh no, you lose the game!");
-  } else {
-    alert("The game ends in a tie!");
-  }
-}
+    function cpuPlay() {
+      const choices = ["rock", "paper", "scissors"];
+      const randomChoice = Math.floor(Math.random() * 3);
+      return choices[randomChoice];
+      }
 
-game();
-</script>
+    function victory(playerChoice, cpuChoice) {
+      playerScore++;
+      playerScore_span.innerHTML = playerScore;
+      cpuScore_span.innerHTML = cpuScore;
+      result_p.innerHTML = playerChoice + " beats " + cpuChoice + ". You win!";
+    }
+
+    function defeat(playerChoice, cpuChoice) {
+      cpuScore++;
+      cpuScore_span.innerHTML = cpuScore;
+      playerScore_span.innerHTML = playerScore;
+      result_p.innerHTML = cpuChoice + " beats " + playerChoice + ". You lose!";
+    }
+
+    function tie(playerChoice, cpuChoice) {
+      result_p.innerHTML = "You both chose the same! It's a tie!";
+    }
+
+    function game(playerChoice) {
+      const cpuChoice = cpuPlay();
+      switch (playerChoice + cpuChoice) {
+        case "paperrock":
+        case "rockscissors":
+        case "scissorspaper":
+          victory(playerChoice, cpuChoice);
+          break;
+        case "rockpaper":
+        case "scissorsrock":
+        case "paperscissors":
+          defeat(playerChoice, cpuChoice);
+          break;
+        case "rockrock":
+        case "paperpaper":
+        case "scissorsscissors":
+          tie(playerChoice, cpuChoice);
+          break;
+      }
+      endGame();
+    }
+
+    function mainGame() {
+      rock_div.addEventListener('click', function() {
+        game("rock");
+      })
+
+      paper_div.addEventListener('click', function() {
+        game("paper");
+      })
+
+      scissors_div.addEventListener('click', function() {
+        game("scissors");
+      })
+    }
+
+    function endGame() {
+      if(playerScore === 5) {
+        result_p.innerHTML = "You won!";
+        document.getElementById("rock-button").disabled = true;
+        document.getElementById("paper-button").disabled = true;
+        document.getElementById("scissors-button").disabled = true;
+      } else if(cpuScore === 5) {
+        result_p.innerHTML = "You lost!";
+        document.getElementById("rock-button").disabled = true;
+        document.getElementById("paper-button").disabled = true;
+        document.getElementById("scissors-button").disabled = true;
+      }
+    }
+
+    mainGame();
+
+    </script>
+
+  </body>
+</html>
